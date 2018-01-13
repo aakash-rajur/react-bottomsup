@@ -24,7 +24,7 @@ class App extends Component {
     }
 
     //provides the updated model object
-    //this.model is a proxy while this argument is a normal js object
+    //this.model is a proxy while provided argument is a normal js object
     onModelUpdate(model) {
         console.log(model);
     }
