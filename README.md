@@ -45,4 +45,4 @@ class App extends Component {
 ### onModelUpdate(model)
 
 called after every mutation of the model.
-Note: do not stringify this.model as your app might crash, use this object instead
+Note: do not stringify this.model as your app might crash, use the provided object instead
