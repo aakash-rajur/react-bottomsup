@@ -15,6 +15,14 @@ npm install react-bottomsup
 import React from 'react';
 import Component from 'react-bottomsup';
 
+
+/**
+* extend the Component class provided by this module instead of React's own
+* Component class.
+* Since the provided component class extends React's Component class
+* no native functionality or featue provided by it is lost.
+* The provided class updates using React Component's setState
+*/
 class App extends Component {
     constructor(props){
         super(props);
