@@ -1,0 +1,29 @@
+.app {
+    display: flex;
+    flex-wrap: nowrap;
+    width: 100vw;
+    height: 100vh;
+    overflow: hidden;
+}
+
+.section {
+    flex-grow: 1;
+    flex-shrink: 1;
+    margin: 16px;
+    border-radius: 8px;
+    width: 50%;
+    padding: 16px;
+}
+
+.model {
+    background: cornsilk;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-evenly;
+}
+
+.invoice {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-evenly;
+}

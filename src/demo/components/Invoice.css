@@ -1,0 +1,61 @@
+.header-section {
+    display: flex;
+    justify-content: space-between;
+}
+
+.invoice-no {
+    align-self: start;
+    padding: 4px;
+}
+
+.date {
+    align-self: flex-end;
+}
+
+.name-section {
+    display: flex;
+}
+
+.name {
+    flex-grow: 1;
+    flex-shrink: 1;
+    margin: 8px;
+    padding: 4px;
+}
+
+.icons {
+    margin:8px;
+    align-self: center;
+}
+
+.item-container {
+    flex-grow: 1;
+    flex-shrink: 1;
+}
+
+.items-body {
+    overflow: visible;
+}
+
+.items-body::-webkit-scrollbar {
+    width: 0;
+}
+
+.qty {
+    max-width: 50px;
+    text-align: end;
+}
+
+.price {
+    text-align: right;
+}
+
+.delete {
+    width: 40px;
+}
+
+.subtotal-section {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+}
