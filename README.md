@@ -1,6 +1,6 @@
 # react-bottomsup
 
->Two-way binding for react apps
+>Two-way binding for react apps  
 Uses proxy to intercept changes
 
 ## Getting Started
