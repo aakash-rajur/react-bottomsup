@@ -16,7 +16,7 @@ function generateHandler(cb) {
 }
 
 function ProxyFactory(object, cb = null) {
-	if (object instanceof Date || object[isProxy]) return object;
+	if (object instanceof Date || object instanceof File || object[isProxy]) return object;
 	if (typeof object === 'object') {
 		if (Array.isArray(object))
 			return new Proxy(object.map(item => ProxyFactory(item, cb)), generateHandler(cb));
@@ -33,6 +33,7 @@ export function extractOriginal(model) {
 		if (Array.isArray(model))
 			return model.map(item => extractOriginal(item));
 		if (model instanceof Date) return model;
+		if (model instanceof File) return model;
 		let clone = {}, keys = Object.keys(model);
 		keys.forEach(key => clone[key] = extractOriginal(model[key]));
 		return clone;
