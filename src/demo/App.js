@@ -10,13 +10,15 @@ import Invoice from "./components/Invoice";
 class App extends Component {
 	constructor(props) {
 		super(props);
+		//state works as usual
 		this.state = {
 			model: null,
 			editName: false
-		}
+		};
 	}
 	
 	async componentDidMount() {
+		//lazy setting of model works too
 		this.model = await fetchInvoice(Math.round(Number(Math.random() * 1000)));
 	}
 	
@@ -26,11 +28,13 @@ class App extends Component {
 				taxAmt = Math.floor(this.model.tax * subtotal * 100) / 100, total = taxAmt + subtotal;
 			if (this.model.total !== total) this.model.total = total;
 		});
+		console.log(this.state);
 	}
 	
 	render() {
 		return (
 			<div className="app">
+				{/*passing model object to child component still works*/}
 				<Jumbotron fluid className="section invoice">
 					{this.model ? <Invoice parent={this}/> : <Loading/>}
 				</Jumbotron>
