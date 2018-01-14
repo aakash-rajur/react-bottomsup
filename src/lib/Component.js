@@ -1,6 +1,6 @@
 import React from "react";
 
-const _model = Symbol('model'), isProxy = Symbol('isProxy'), update = Symbol('update');
+const _model = Symbol('model'), isProxy = Symbol('isProxy');
 
 function generateHandler(cb) {
 	return {
@@ -58,7 +58,7 @@ class Component extends React.Component {
 	}
 	
 	set model(model) {
-		this[_model] = ProxyFactory(model, () => this.setState({[update]: Date.now()}, this.onModelUpdate(extractOriginal(this[_model]))));
+		this[_model] = ProxyFactory(model, () => this.setState(prev => Object.assign({},prev), this.onModelUpdate(extractOriginal(this[_model]))));
 		this.onModelUpdate(extractOriginal(this[_model]));
 	}
 	
