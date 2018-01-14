@@ -3,6 +3,10 @@
 >Two-way binding for react apps  
 Uses proxy to intercept changes
 
+## Demo
+
+https://aakashrajur.github.io/react-bottomsup/
+
 ## Getting Started
 ```
 npm install react-bottomsup
