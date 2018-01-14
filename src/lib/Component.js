@@ -32,6 +32,7 @@ export function extractOriginal(model) {
 	if (typeof model === 'object'){
 		if (Array.isArray(model))
 			return model.map(item => extractOriginal(item));
+		if (model instanceof Date) return model;
 		let clone = {}, keys = Object.keys(model);
 		keys.forEach(key => clone[key] = extractOriginal(model[key]));
 		return clone;
