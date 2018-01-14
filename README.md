@@ -21,7 +21,7 @@ import Component from 'react-bottomsup';
 * Component class.
 * Since the provided component class extends React's Component class
 * no native functionality or featue provided by it is lost.
-* The provided class updates using React Component's setState
+* package provided class updates using React Component's setState
 */
 class App extends Component {
     constructor(props){
@@ -48,9 +48,10 @@ class App extends Component {
 }
 ```
 
+Note: Built-in objects like ```Date```, ```File```, ```Set```, ```WeakSet```, ```Map```, ```WeakMap``` can't be further deep proxified and returned as it is. An object containing them can still be proxified
 ## API
 
 ### onModelUpdate(model)
 
-called after every mutation of the model.
-Note: do not stringify this.model as your app might crash, use the provided object instead
+called after every mutation of the model.   
+Note: do not stringify ```this.model``` as your app might crash, use the model object provided in the callback instead

@@ -15,8 +15,16 @@ function generateHandler(cb) {
 	};
 }
 
+function isBuiltInType(object) {
+	return object instanceof Date || object instanceof File
+		|| object instanceof Set || object instanceof WeakSet
+		|| object instanceof Map || object instanceof WeakMap
+		|| object instanceof ArrayBuffer || object instanceof DataView;
+}
+
 function ProxyFactory(object, cb = null) {
-	if (object instanceof Date || object instanceof File || object[isProxy]) return object;
+	if (isBuiltInType(object) || object[isProxy])
+		return object;
 	if (typeof object === 'object') {
 		if (Array.isArray(object))
 			return new Proxy(object.map(item => ProxyFactory(item, cb)), generateHandler(cb));
@@ -29,11 +37,10 @@ function ProxyFactory(object, cb = null) {
 }
 
 export function extractOriginal(model) {
-	if (typeof model === 'object'){
+	if (isBuiltInType(model)) return model;
+	if (typeof model === 'object') {
 		if (Array.isArray(model))
 			return model.map(item => extractOriginal(item));
-		if (model instanceof Date) return model;
-		if (model instanceof File) return model;
 		let clone = {}, keys = Object.keys(model);
 		keys.forEach(key => clone[key] = extractOriginal(model[key]));
 		return clone;
