@@ -23,9 +23,9 @@ import Component from 'react-bottomsup';
 /**
 * extend the Component class provided by this module instead of React's own
 * Component class.
-* Since the provided component class extends React's Component class
-* no native functionality or featue provided by it is lost.
-* package provided class updates using React Component's setState
+* Since the provided component class extends React's own Component class,
+* no native functionality or featue provided by the former is lost.
+* class provided by this module updates using React Component's own setState
 */
 class App extends Component {
     constructor(props){
@@ -36,7 +36,7 @@ class App extends Component {
     }
 
     //provides the updated model object
-    //this.model is a proxy while provided argument is a normal js object
+    //this.model is a proxy while the provided argument is a normal js object
     onModelUpdate(model) {
         console.log(model);
     }
@@ -52,7 +52,7 @@ class App extends Component {
 }
 ```
 
-Note: Built-in objects like ```Date```, ```File```, ```Set```, ```WeakSet```, ```Map```, ```WeakMap``` can't be further deep proxified and returned as it is. An object containing them can still be proxified
+Note: Built-in objects like ```Date```, ```File```, ```Set```, ```WeakSet```, ```Map```, ```WeakMap``` can't be further deep proxified and are returned as it is. An object containing them can still be proxified
 ## API
 
 ### onModelUpdate(model)
