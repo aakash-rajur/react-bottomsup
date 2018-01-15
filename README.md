@@ -44,7 +44,7 @@ class App extends Component {
     render(){
         return (
             <div>
-                <input type="text" inputMode={this.model.text} onChange={e => this.model.text = e.target.value}/>
+                <input type="text" value={this.model.text} onChange={e => this.model.text = e.target.value}/>
                 <div>{this.model.text}</div>
             </div>
         );
