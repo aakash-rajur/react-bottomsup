@@ -59,3 +59,22 @@ Note: Built-in objects like ```Date```, ```File```, ```Set```, ```WeakSet```, ``
 
 called after every mutation of the model.   
 Note: do not stringify ```this.model``` as your app might crash, use the model object provided in the callback instead
+
+
+### setState(state[, cb])
+
+a promisified wrapper around react's native setState.  
+Will return a promise if you skip the callback parameter
+
+
+## Demo source
+https://github.com/aakashRajur/react-bottomsup/tree/master/src/demo  
+made using create-react-app
+
+## [Licence](https://github.com/aakashRajur/react-bottomsup/blob/master/LICENCE)
+Feel free to use the source anyhow you want.  
+
+
+## Got an idea or can you improve it?
+hit me up.  
+Welcome to ideas, queries and suggestions
