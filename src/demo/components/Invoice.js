@@ -2,7 +2,7 @@ import React from 'react';
 import {Button, Table} from "reactstrap";
 import './Invoice.css';
 
-function RenderItem({index, row, parent}) {
+function RenderItem({index, row, model}) {
 	return (
 		<tr>
 			<th scope="row" className="align-middle">{`#${index + 1}`}</th>
@@ -19,26 +19,26 @@ function RenderItem({index, row, parent}) {
 			<td className="price align-middle">{`$${row.rate * row.qty}`}</td>
 			<td className="delete">
 				<Button className="material-icons icons" size="sm"
-				        onClick={() => parent.model.items.splice(index, 1)}>delete</Button></td>
+				        onClick={() => model.items.splice(index, 1)}>delete</Button></td>
 		</tr>
 	);
 }
 
-export default function ({parent}) {
+export default function ({parent: {model, state, setState}}) {
 	return (
 		<React.Fragment>
 			<div className="header-section">
-				<span className="invoice-no">{`#${parent.model.invoiceID}`}</span>
-				<span className="date">{`Dated: ${parent.model.date.toLocaleDateString()}`}</span>
+				<span className="invoice-no">{`#${model.invoiceID}`}</span>
+				<span className="date">{`Dated: ${model.date.toLocaleDateString()}`}</span>
 			</div>
 			<div className="name-section">
-				{!parent.state.editName ? <div className="name">{parent.model.name}</div> :
-					<input type="text" value={parent.model.name} className="name"
-					       onBlur={() => parent.setState({editName: false})}
-					       onChange={e => parent.model.name = e.target.value}/>}
+				{!state.editName ? <div className="name">{model.name}</div> :
+					<input type="text" value={model.name} className="name"
+					       onBlur={() => setState({editName: false})}
+					       onChange={e => model.name = e.target.value}/>}
 				<Button className="material-icons icons" size="sm"
-				        color={parent.state.editName ? 'secondary' : 'primary'}
-				        onClick={() => parent.setState({editName: !parent.state.editName})}>
+				        color={state.editName ? 'secondary' : 'primary'}
+				        onClick={() => setState({editName: !state.editName})}>
 					edit
 				</Button>
 			</div>
@@ -54,44 +54,44 @@ export default function ({parent}) {
 				</tr>
 				</thead>
 				<tbody>
-				{parent.model.items.map((item, index) =>
-					<RenderItem index={index} row={item} parent={parent} key={index}/>)}
-				{parent.model.items.length < 5 &&
+				{model.items.map((item, index) =>
+					<RenderItem index={index} row={item} model={model} key={index}/>)}
+				{model.items.length < 5 &&
 				<tr>
 					<th>&nbsp;</th>
 					<th>
-						<input type="text" value={(parent.model.newItem && parent.model.newItem.item) || ''}
-						       onChange={({target: {value}}) => parent.model.newItem = Object.assign(parent.model.newItem || {}, {item: value})}/>
+						<input type="text" value={(model.newItem && model.newItem.item) || ''}
+						       onChange={({target: {value}}) => model.newItem = Object.assign(model.newItem || {}, {item: value})}/>
 					</th>
 					<th>
 						<input type="number" className="qty"
-						       value={(parent.model.newItem && parent.model.newItem.qty) || 0}
+						       value={(model.newItem && model.newItem.qty) || 0}
 						       onChange={({target: {value}}) => {
 							       if (value < 0) return;
-							       parent.model.newItem = Object.assign(parent.model.newItem || {}, {qty: parseFloat(value) || 0});
+							       model.newItem = Object.assign(model.newItem || {}, {qty: parseFloat(value) || 0});
 						       }}/></th>
 					<th>
 						<input type="number" className="qty"
-						       value={(parent.model.newItem && parent.model.newItem.rate) || 0}
+						       value={(model.newItem && model.newItem.rate) || 0}
 						       onChange={({target: {value}}) => {
 							       if (value < 0) return;
-							       parent.model.newItem = Object.assign(parent.model.newItem || {}, {rate: parseFloat(value) || 0});
+							       model.newItem = Object.assign(model.newItem || {}, {rate: parseFloat(value) || 0});
 						       }}/></th>
-					<th>{parent.model.newItem ? (({qty, rate}) => (qty || 0) * (rate || 0))(parent.model.newItem) : 0}</th>
+					<th>{model.newItem ? (({qty, rate}) => (qty || 0) * (rate || 0))(model.newItem) : 0}</th>
 					<th>
 						<Button color="primary" size="sm" className="material-icons icons"
 						        onClick={() => {
-							        let {newItem, items} = parent.model;
+							        let {newItem, items} = model;
 							        if (newItem && newItem.item && newItem.qty && newItem.rate && items.push(newItem))
-								        delete parent.model.newItem;
+								        delete model.newItem;
 						        }}>add</Button>
 					</th>
 				</tr>}
 				</tbody>
 			</Table>
 			{(() => {
-				let subtotal = parent.model.items.reduce((acc, item) => acc += item.qty * item.rate, 0),
-					taxAmt = Math.floor(parent.model.tax * subtotal * 100) / 100;
+				let subtotal = model.items.reduce((acc, item) => acc += item.qty * item.rate, 0),
+					taxAmt = Math.floor(model.tax * subtotal * 100) / 100;
 				return (
 					<React.Fragment>
 						<h4 className="subtotal-section">
@@ -99,12 +99,12 @@ export default function ({parent}) {
 							<span>{`$${subtotal}`}</span>
 						</h4>
 						<h5 className="subtotal-section">
-							<span>{`Tax(${parent.model.tax * 100}%):`}</span>
+							<span>{`Tax(${model.tax * 100}%):`}</span>
 							<span>{`$${taxAmt}`}</span>
 						</h5>
 						<h2 className="subtotal-section">
 							<span>Total</span>
-							<span>{`$${parent.model.total}`}</span>
+							<span>{`$${model.total}`}</span>
 						</h2>
 					</React.Fragment>
 				);
