@@ -8,7 +8,7 @@ function generateHandler(cb) {
 			let val = target[prop];
 			if (val !== value) {
 				target[prop] = ProxyFactory(value, cb);
-				cb && cb()
+				return (cb && cb()) || true;
 			}
 			return true;
 		}
@@ -51,17 +51,23 @@ export function extractOriginal(model) {
 class Component extends React.Component {
 	constructor(props) {
 		super(props);
+		this.setState = this.setState.bind(this);
 		this.onModelUpdate = this.onModelUpdate.bind(this);
 	}
-	
+
 	onModelUpdate(model) {
 	}
-	
-	set model(model) {
-		this[_model] = ProxyFactory(model, () => this.setState(prev => Object.assign({},prev), this.onModelUpdate(extractOriginal(this[_model]))));
-		this.onModelUpdate(extractOriginal(this[_model]));
+
+	setState(arg, cb){
+		if (cb) return super.setState(arg, cb);
+		return new Promise(resolve => super.setState(arg, () => resolve(this.state)));
 	}
-	
+
+	set model(model) {
+		this.onModelUpdate(extractOriginal(this[_model] = ProxyFactory(model, () =>
+			this.setState(prev => Object.assign({}, prev), this.onModelUpdate(extractOriginal(this[_model]))))));
+	}
+
 	get model() {
 		return this[_model];
 	}
