@@ -16,12 +16,12 @@ class App extends Component {
 			editName: false
 		};
 	}
-	
+
 	async componentDidMount() {
 		//lazy setting of model works too
 		this.model = await fetchInvoice(Math.round(Number(Math.random() * 1000)));
 	}
-	
+
 	onModelUpdate(model) {
 		this.setState({model}, () => {
 			let subtotal = this.model.items.reduce((acc, item) => acc += item.qty * item.rate, 0),
@@ -30,7 +30,7 @@ class App extends Component {
 		});
 		console.log(this.state);
 	}
-	
+
 	render() {
 		return (
 			<div className="app">
