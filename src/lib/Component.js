@@ -53,6 +53,7 @@ class Component extends React.Component {
 		super(props);
 		this.setState = this.setState.bind(this);
 		this.onModelUpdate = this.onModelUpdate.bind(this);
+		this.getModel = this.getModel.bind(this);
 	}
 
 	onModelUpdate(model) {
@@ -70,6 +71,10 @@ class Component extends React.Component {
 
 	get model() {
 		return this[_model];
+	}
+
+	getModel(){
+		return extractOriginal(this.model);
 	}
 }
 
