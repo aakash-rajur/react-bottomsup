@@ -36,6 +36,15 @@ function ProxyFactory(object, cb = null) {
 	return object;
 }
 
+function autobind(context) {
+	Object.keys(context)
+		.forEach(key => {
+			let obj = context[key];
+			if (typeof obj === 'function')
+				context[key] = obj.bind(context);
+		});
+}
+
 export function extractOriginal(model) {
 	if (isBuiltInType(model)) return model;
 	if (typeof model === 'object') {
@@ -54,6 +63,7 @@ class Component extends React.Component {
 		this.setState = this.setState.bind(this);
 		this.onModelUpdate = this.onModelUpdate.bind(this);
 		this.getModel = this.getModel.bind(this);
+		autobind(this)
 	}
 
 	onModelUpdate(model) {
