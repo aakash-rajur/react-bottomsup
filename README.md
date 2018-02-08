@@ -81,6 +81,16 @@ will destroy the whole purpose or react's optimization.
 **`Use it wisely!`**
 ```  
 
+### Auto bind
+
+all function defined in the class are auto bound.  
+```jsx harmony
+/**
+* No need to do this any more in your constructor
+**/
+this.mySuperFunction = this.mySuperFunction.bind(this);
+```
+
 ## Strategies
 
 ### mix as much as you want
@@ -143,7 +153,6 @@ class Form extends Component {
 				inputText: null
 			}
 		};
-		this.onSubmit = this.onSubmit.bind(this);
 	}
 	
 	async onSubmit() {
